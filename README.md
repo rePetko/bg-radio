@@ -15,7 +15,7 @@ them from the home screen.
   ⏭ on a paired headset/car-stereo advances to the next favorite station
   and ⏮ goes back
 - Settings: HTTPS-only streams, station artwork (cached locally), low data
-  mode (filter ≤96 kbps), auto-enable low data on mobile
+  mode (filter ≤128 kbps), auto-enable low data on mobile
 - Background playback (foreground service + media notification)
 - Lock-screen / notification controls via `MediaSession`
 - Station list is cached to disk; the app works offline once you've browsed once
@@ -55,23 +55,32 @@ them from the home screen.
 ```
 bg-radio/
 ├── app/
-│   ├── build.gradle.kts          ← dependencies (Media3, RecyclerView, coroutines)
+│   ├── build.gradle.kts                ← deps (Media3, RecyclerView, coroutines, dnsjava)
 │   └── src/main/
 │       ├── AndroidManifest.xml
 │       ├── java/com/example/bgradio/
-│       │   ├── MainActivity.kt        ← favorites + play controls
-│       │   ├── BrowseActivity.kt      ← searchable station picker
-│       │   ├── StationAdapter.kt      ← RecyclerView adapter (shared)
-│       │   ├── Station.kt             ← data model + JSON parsing
-│       │   ├── StationRepository.kt   ← radio-browser API + disk cache
-│       │   ├── FavoritesStore.kt      ← SharedPreferences-backed favorites
-│       │   └── PlaybackService.kt     ← MediaSessionService (holds ExoPlayer)
+│       │   ├── MainActivity.kt         ← favorites list + playback controls
+│       │   ├── BrowseActivity.kt       ← searchable station picker
+│       │   ├── SettingsActivity.kt     ← privacy / data toggles
+│       │   ├── StationAdapter.kt       ← shared RecyclerView adapter
+│       │   ├── Station.kt              ← data model + JSON parsing
+│       │   ├── StationRepository.kt    ← radio-browser API + disk cache
+│       │   ├── FavoritesStore.kt       ← SharedPreferences-backed favorites
+│       │   ├── SettingsStore.kt        ← SharedPreferences-backed settings
+│       │   ├── FaviconCache.kt         ← per-station logo cache (filesDir)
+│       │   └── PlaybackService.kt      ← MediaSessionService (holds ExoPlayer)
 │       └── res/
+│           ├── drawable/               ← media-control + favorite icons,
+│           │                            launcher foreground
 │           ├── layout/
 │           │   ├── activity_main.xml
 │           │   ├── activity_browse.xml
+│           │   ├── activity_settings.xml
 │           │   └── item_station.xml
-│           └── values/{strings,themes}.xml
+│           ├── mipmap-anydpi-v26/      ← adaptive launcher icon (API 26+)
+│           ├── mipmap-anydpi/          ← vector launcher fallback (API 24–25)
+│           ├── values/                 ← strings, colors, themes (light)
+│           └── values-night/           ← colors (dark)
 ├── build.gradle.kts
 ├── settings.gradle.kts
 └── gradle.properties
@@ -160,5 +169,5 @@ without any extra code. Caveats:
 
 - Now-playing metadata from the stream (ICY title)
 - Sleep timer, equalizer
-- Station favicons in the list (would need Coil/Glide)
-- App icon (Android Studio will offer to generate one on first build)
+- Station favicons in the list itself (would need Coil/Glide; they already
+  appear in the media notification when "Show station artwork" is on)
