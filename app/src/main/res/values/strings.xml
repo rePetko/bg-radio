@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BG Radio</string>
+    <string name="play">▶ Play</string>
+    <string name="pause">⏸ Pause</string>
+    <string name="favorites_title">Favorites</string>
+    <string name="browse_button">Browse stations</string>
+    <string name="browse_title">Bulgarian radio stations</string>
+    <string name="empty_favorites">No favorites yet.\nTap “Browse stations” and star one to add it here.</string>
+    <string name="nothing_playing">Nothing playing</string>
+    <string name="now_playing_fmt">Now playing: %1$s</string>
+    <string name="live_radio">Live radio</string>
+    <string name="pick_a_station">Pick a station first</string>
+    <string name="search_hint">Search stations</string>
+    <string name="no_matches">No stations match your search</string>
+    <string name="load_failed">Could not load stations. Check your connection and try again.</string>
+    <string name="refresh_failed">Could not refresh station list</string>
+    <string name="add_favorite">Add to favorites</string>
+    <string name="remove_favorite">Remove from favorites</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_button">Settings</string>
+    <string name="settings_https_only_title">HTTPS-only streams</string>
+    <string name="settings_https_only_desc">Hide stations that use unencrypted (HTTP) audio streams and block them from playing. Recommended for privacy.</string>
+    <string name="settings_show_artwork_title">Show station artwork in notification</string>
+    <string name="settings_show_artwork_desc">When enabled, the media notification shows the station’s logo. The logo is fetched once on first play and cached locally — subsequent plays do not contact the station’s server for the logo. When disabled, the notification uses a generic media icon and no logo is fetched.</string>
+    <string name="cleartext_blocked">This station uses HTTP. Turn off “HTTPS-only” in Settings to play it.</string>
+
+    <string name="settings_low_data_title">Low data mode</string>
+    <string name="settings_low_data_desc">Hide stations above 128 kbps from the browse list. Useful on metered connections; stations already in your favorites are not affected.</string>
+    <string name="settings_auto_low_title">Auto-enable on mobile data</string>
+    <string name="settings_auto_low_desc">When connected to cellular, apply the low-data filter automatically. Needs the (normal-tier) ACCESS_NETWORK_STATE permission to read the connection type.</string>
+    <string name="low_data_banner">Low data mode is on — filtered to ≤128 kbps streams</string>
+    <string name="skip_previous">Previous station</string>
+    <string name="skip_next">Next station</string>
+    <string name="play_station">Play this station</string>
+</resources>

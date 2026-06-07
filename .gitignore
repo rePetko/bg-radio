@@ -1,0 +1,42 @@
+# Built artifacts
+/build/
+/app/build/
+**/build/
+/captures/
+*.apk
+*.aab
+*.ap_
+*.aar
+
+# Gradle
+.gradle/
+local.properties
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Keep some useful IDE files
+!.idea/codeStyles
+!.idea/runConfigurations
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Native build outputs
+.cxx/
+
+# Keystores (just in case)
+*.jks
+*.keystore
+
+# Misc
+hs_err_pid*
+replay_pid*
