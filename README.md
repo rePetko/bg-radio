@@ -34,7 +34,7 @@ them from the home screen.
      native launcher" notification)
    - Inside the IDE: **Tools → Create Desktop Entry…** adds Android Studio
      to your GNOME/KDE app menu so you don't need the install path anymore
-   - On first launch it installs the Android SDK (API 34) and Gradle automatically
+   - On first launch it installs the Android SDK (API 37) and Gradle automatically
 
    Or via the JetBrains Toolbox App (https://www.jetbrains.com/toolbox-app/),
    which manages installs/updates and creates the native launcher and
