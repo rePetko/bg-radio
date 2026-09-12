@@ -4,6 +4,8 @@ import android.app.PendingIntent
 import android.content.Intent
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
+import androidx.media3.common.ForwardingPlayer
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
@@ -13,7 +15,7 @@ class PlaybackService : MediaSessionService() {
 
     override fun onCreate() {
         super.onCreate()
-        val player = ExoPlayer.Builder(this)
+        val exo = ExoPlayer.Builder(this)
             .setAudioAttributes(
                 AudioAttributes.Builder()
                     .setUsage(C.USAGE_MEDIA)
@@ -23,7 +25,7 @@ class PlaybackService : MediaSessionService() {
             )
             .setHandleAudioBecomingNoisy(true)
             .build()
-        mediaSession = MediaSession.Builder(this, player)
+        mediaSession = MediaSession.Builder(this, LiveStreamPlayer(exo))
             .setSessionActivity(buildSessionActivityIntent())
             .build()
     }
@@ -60,5 +62,22 @@ class PlaybackService : MediaSessionService() {
             mediaSession = null
         }
         super.onDestroy()
+    }
+}
+
+/**
+ * Rewrites pause as a real stop for live streams: releases the network socket
+ * instead of quietly buffering forever. Play reconnects via prepare() + play().
+ */
+private class LiveStreamPlayer(base: Player) : ForwardingPlayer(base) {
+    override fun pause() {
+        stop()
+    }
+
+    override fun play() {
+        if (playbackState == Player.STATE_IDLE) {
+            prepare()
+        }
+        super.play()
     }
 }
