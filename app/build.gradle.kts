@@ -2,6 +2,20 @@ plugins {
     id("com.android.application")
 }
 
+fun git(vararg args: String): String? = runCatching {
+    providers.exec {
+        commandLine("git", *args)
+        isIgnoreExitValue = true
+    }.standardOutput.asText.get().trim().ifEmpty { null }
+}.getOrNull()
+
+// versionCode must increase monotonically; commit count does that for free.
+val gitVersionCode = git("rev-list", "--count", "HEAD")?.toIntOrNull() ?: 1
+// Reads "1.0" on a v1.0 tag, "1.0-3-gabc1234" three commits past it,
+// and falls back to the bare hash until the first tag exists.
+val gitVersionName = git("describe", "--tags", "--always", "--dirty")
+    ?.removePrefix("v") ?: "0-dev"
+
 android {
     namespace = "com.example.bgradio"
     compileSdk = 37
@@ -10,8 +24,8 @@ android {
         applicationId = "com.example.bgradio"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = gitVersionCode
+        versionName = gitVersionName
     }
 
     buildTypes {
@@ -24,6 +38,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+base {
+    archivesName = "bg-radio-$gitVersionName"
 }
 
 dependencies {
